@@ -60,12 +60,31 @@ export async function fetchMarketList(): Promise<StockInfo[] | undefined> {
   return data;
 }
 
+export async function fetchStockDetails(symbol: string) {
+  return doRequest({
+    resource: 'stocks',
+    queryParams: new URLSearchParams({symbol}),
+  });
+}
+
 export const hook = {
   useMarketList: () => {
     return useQuery({
       queryKey: ['stocks'],
       queryFn: fetchMarketList,
       staleTime: 30 * 60 * 1000, // 30 minutes
+    });
+  },
+  useStockDetails: (symbol?: string) => {
+    return useQuery({
+      queryKey: ['stocks', symbol],
+      queryFn: () => {
+        if (!!symbol) {
+          return fetchStockDetails(symbol);
+        }
+      },
+      staleTime: 30 * 60 * 1000, // 30 minutes
+      enabled: !!symbol,
     });
   },
 };

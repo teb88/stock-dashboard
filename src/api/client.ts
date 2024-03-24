@@ -1,11 +1,12 @@
 import {useQuery} from '@tanstack/react-query';
+
+import {TimeInterval} from '../models/generic';
 import {
   StockInfo,
   StockResponse,
   TimeSeriesResponse,
 } from '../models/responses';
 import {composeUrl} from './utils';
-import {TimeInterval} from '../models/generic';
 
 const API_BASE = 'https://api.twelvedata.com/';
 
@@ -101,7 +102,7 @@ export const hook = {
     return useQuery({
       queryKey: ['stocks', 'details', symbol],
       queryFn: async () => {
-        if (!!symbol) {
+        if (symbol) {
           const data = await fetchStockDetails(symbol);
           return data?.[0];
         }
@@ -127,10 +128,10 @@ export const hook = {
 
         const queryParams: Record<string, string> = {symbol, interval};
 
-        if (!!start_date) {
+        if (start_date) {
           queryParams.start_date = start_date;
         }
-        if (!!end_date) {
+        if (end_date) {
           queryParams.end_date = end_date;
         }
 

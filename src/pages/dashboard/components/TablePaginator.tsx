@@ -1,14 +1,14 @@
-import {
-  Box,
-  IconButton,
-  Select,
-  Option,
-  FormControl,
-  FormLabel,
-  Typography,
-} from '@mui/joy';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  IconButton,
+  Option,
+  Select,
+  Typography,
+} from '@mui/joy';
 import React from 'react';
 
 interface TablePaginatorProps {
@@ -16,7 +16,7 @@ interface TablePaginatorProps {
   maxPages: number;
   rowsPerPage: number;
   totalRows: number;
-  onChangeRowsPerPage: (ev: any, rowsPerPage: number | null) => void;
+  onChangeRowsPerPage: (ev: unknown, rowsPerPage: number | null) => void;
   onChangePage: (page: number) => void;
   range: readonly [number, number];
 }

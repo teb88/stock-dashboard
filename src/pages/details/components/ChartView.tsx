@@ -1,8 +1,9 @@
-import {TimeChartOptions, createChart} from 'lightweight-charts';
+import {Box} from '@mui/joy';
+import {createChart,TimeChartOptions} from 'lightweight-charts';
 import React, {useEffect, useRef} from 'react';
+
 import {TimeSeriesItem} from '../../../models/responses';
 import {TimeSeries} from '../../../models/ViewModels/TimeSeries';
-import {Box} from '@mui/joy';
 import {sort} from '../../../utils/array';
 
 interface ChartViewProps {

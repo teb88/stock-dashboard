@@ -1,4 +1,5 @@
 import {CandlestickData, UTCTimestamp} from 'lightweight-charts';
+
 import {TimeSeriesItem} from '../responses';
 
 export const TimeSeries = (

@@ -1,13 +1,14 @@
 import {Box, Link, Sheet, Table} from '@mui/joy';
 import React, {Suspense, useState} from 'react';
 import {Link as RouterLink} from 'react-router-dom';
+
 import {hook} from '../../../api/client';
 import usePaginate from '../../../hooks/usePaginate';
-import TablePaginator from './TablePaginator';
 import useSearch from '../../../hooks/useSearch';
 import TableFilter from './TableFilter';
+import TablePaginator from './TablePaginator';
 
-const StockTable: React.FC<{}> = () => {
+const StockTable: React.FC = () => {
   const {data: rawData, isLoading} = hook.useMarketList();
   const [searchProperty, setSearchProperty] = useState<'name' | 'symbol'>(
     'name'

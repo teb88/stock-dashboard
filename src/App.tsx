@@ -1,5 +1,6 @@
-import './App.css';
 import '@fontsource/inter';
+import './App.css';
+
 import Dashboard from './pages/dashboard/Dashboard';
 
 function App() {

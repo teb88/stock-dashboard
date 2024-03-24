@@ -1,8 +1,9 @@
+import {Sheet} from '@mui/joy';
 import React from 'react';
+
 import {hook} from '../../../api/client';
 import {TimeInterval} from '../../../models/generic';
 import ChartView from './ChartView';
-import {Sheet} from '@mui/joy';
 
 interface ChatProps {
   symbol: string;

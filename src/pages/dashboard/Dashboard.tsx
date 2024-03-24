@@ -1,4 +1,5 @@
 import {Box, Typography} from '@mui/joy';
+
 import StockTable from './components/StockTable';
 
 const Dashboard = () => {

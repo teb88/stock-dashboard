@@ -5,7 +5,7 @@ interface PaginationOptions {
   rowsPerPage: number;
 }
 
-function usePaginate<T = any>(
+function usePaginate<T>(
   data: Array<T> = [],
   options: PaginationOptions = {initialPage: 1, rowsPerPage: 30}
 ) {

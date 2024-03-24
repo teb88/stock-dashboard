@@ -1,5 +1,6 @@
-import {Sheet, Box, ToggleButtonGroup, Button} from '@mui/joy';
+import {Box, Button,Sheet, ToggleButtonGroup} from '@mui/joy';
 import React from 'react';
+
 import {TimeInterval} from '../../../models/generic';
 
 interface ChartFiltersProps {
@@ -12,7 +13,7 @@ const ChartFilters: React.FC<ChartFiltersProps> = ({
   interval,
 }) => {
   const handleChangeInterval = (_: unknown, interval: TimeInterval | null) => {
-    if (!!interval) {
+    if (interval) {
       onChangeInterval(interval);
     }
   };

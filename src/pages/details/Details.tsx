@@ -1,11 +1,12 @@
-import {useParams} from 'react-router-dom';
-import {hook} from '../../api/client';
-import DetailsHeader from './components/DetailsHeader';
 import {Box} from '@mui/joy';
-import ChartFilters from './components/ChartFilters';
 import {useState} from 'react';
+import {useParams} from 'react-router-dom';
+
+import {hook} from '../../api/client';
 import {TimeInterval} from '../../models/generic';
 import Chart from './components/Chart';
+import ChartFilters from './components/ChartFilters';
+import DetailsHeader from './components/DetailsHeader';
 
 const Details = () => {
   const {symbol} = useParams<{symbol: string}>();

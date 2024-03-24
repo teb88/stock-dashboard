@@ -1,6 +1,7 @@
-import React from 'react';
-import {StockInfo} from '../../../models/responses';
 import {Box, Sheet, Typography} from '@mui/joy';
+import React from 'react';
+
+import {StockInfo} from '../../../models/responses';
 
 // type DetailsHeaderProps = Pick<StockInfo, ''>
 

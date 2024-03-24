@@ -15,7 +15,7 @@ const DetailsHeader: React.FC<StockInfo> = ({
     <Sheet
       component="section"
       variant="outlined"
-      sx={{display: 'flex', boxShadow: 'sm', borderRadius: 'md', p: 1}}
+      sx={{display: 'flex', boxShadow: 'sm', borderRadius: 'md', p: 1, mb: 2}}
     >
       <Typography level="h1" fontSize={50} sx={{mr: 1, alignSelf: 'end'}}>
         {symbol}

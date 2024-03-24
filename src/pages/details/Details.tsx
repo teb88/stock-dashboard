@@ -1,7 +1,7 @@
 import {useParams} from 'react-router-dom';
 import {hook} from '../../api/client';
 import DetailsHeader from './components/DetailsHeader';
-import {Box, Sheet} from '@mui/joy';
+import {Box} from '@mui/joy';
 import ChartFilters from './components/ChartFilters';
 import {useState} from 'react';
 import {TimeInterval} from '../../models/generic';

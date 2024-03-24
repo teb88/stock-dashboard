@@ -44,14 +44,19 @@ export async function doRequest(config: {
  * response list is pretty much static
  * caching response is suggested
  */
-export async function fetchMarketList(): Promise<StockInfo[] | undefined> {
+export async function fetchMarketList(
+  market: string
+): Promise<StockInfo[] | undefined> {
   const cacheKey = 'stocks';
   if (tempCache.has(cacheKey)) {
     console.log('using cache');
     return tempCache.get(cacheKey);
   }
 
-  const data = await doRequest({resource: 'stocks'});
+  const data = await doRequest({
+    resource: 'stocks',
+    queryParams: new URLSearchParams({exchange: market}),
+  });
 
   if (data) {
     tempCache.set(cacheKey, data);
@@ -68,16 +73,16 @@ export async function fetchStockDetails(symbol: string) {
 }
 
 export const hook = {
-  useMarketList: () => {
+  useMarketList: (market: string = 'NYSE') => {
     return useQuery({
-      queryKey: ['stocks'],
-      queryFn: fetchMarketList,
+      queryKey: ['stocks', market],
+      queryFn: () => fetchMarketList(market),
       staleTime: 30 * 60 * 1000, // 30 minutes
     });
   },
   useStockDetails: (symbol?: string) => {
     return useQuery({
-      queryKey: ['stocks', symbol],
+      queryKey: ['stocks', 'details', symbol],
       queryFn: () => {
         if (!!symbol) {
           return fetchStockDetails(symbol);

@@ -1,4 +1,5 @@
-import {Input, ToggleButtonGroup, Button, Box} from '@mui/joy';
+import {Cancel} from '@mui/icons-material';
+import {Input, ToggleButtonGroup, Button, Box, IconButton} from '@mui/joy';
 import React from 'react';
 
 interface FilterOption {
@@ -12,6 +13,7 @@ interface TableFilterProps {
   textFilter: string;
   setTextFilter: (value: string) => void;
   onChangeFilterOption: (key: string) => void;
+  placeholder?: string;
 }
 
 const TableFilter: React.FC<TableFilterProps> = ({
@@ -20,6 +22,7 @@ const TableFilter: React.FC<TableFilterProps> = ({
   filterOptions,
   selectedFilterOption,
   onChangeFilterOption,
+  placeholder,
 }) => {
   const handleChangeFilterOption = (newValue: string | null) => {
     if (newValue) {
@@ -29,8 +32,16 @@ const TableFilter: React.FC<TableFilterProps> = ({
   return (
     <Box sx={{display: 'flex', gap: 1, justifyContent: 'center'}}>
       <Input
+        endDecorator={
+          <IconButton
+            onClick={() => setTextFilter('')}
+            sx={{visibility: textFilter ? 'visible' : 'hidden'}}
+          >
+            <Cancel />
+          </IconButton>
+        }
         type="text"
-        placeholder="Search by"
+        placeholder={placeholder}
         size="md"
         value={textFilter}
         onChange={(ev) => setTextFilter(ev.target.value || '')}

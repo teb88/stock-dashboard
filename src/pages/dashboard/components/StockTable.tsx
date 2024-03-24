@@ -1,5 +1,6 @@
-import {Sheet, Table} from '@mui/joy';
+import {Box, Link, Sheet, Table} from '@mui/joy';
 import React, {Suspense, useState} from 'react';
+import {Link as RouterLink} from 'react-router-dom';
 import {hook} from '../../../api/client';
 import usePaginate from '../../../hooks/usePaginate';
 import TablePaginator from './TablePaginator';
@@ -35,12 +36,20 @@ const StockTable: React.FC<{}> = () => {
   };
 
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        overflow: 'hidden',
+      }}
+    >
       <Sheet
         variant="outlined"
         sx={{width: '100%', boxShadow: 'sm', borderRadius: 'sm', mb: 3, p: 2}}
       >
         <TableFilter
+          placeholder="Buscar por..."
           textFilter={filter}
           setTextFilter={setFilter}
           onChangeFilterOption={(val) =>
@@ -48,16 +57,22 @@ const StockTable: React.FC<{}> = () => {
           }
           selectedFilterOption={searchProperty}
           filterOptions={[
-            {key: 'name', label: 'Name'},
-            {key: 'symbol', label: 'Symbol'},
+            {key: 'name', label: 'Nombre'},
+            {key: 'symbol', label: 'Símbolo'},
           ]}
         />
       </Sheet>
       <Sheet
         variant="outlined"
-        sx={{width: '100%', boxShadow: 'sm', borderRadius: 'sm'}}
+        sx={{
+          width: '100%',
+          boxShadow: 'sm',
+          borderRadius: 'sm',
+          flexGrow: 1,
+          overflowY: 'auto',
+        }}
       >
-        <Table>
+        <Table stickyHeader stickyFooter stripe="odd">
           <thead>
             <tr>
               <th>Simbolo</th>
@@ -70,7 +85,14 @@ const StockTable: React.FC<{}> = () => {
             <tbody>
               {data.map((stockInfo) => (
                 <tr key={`${stockInfo.symbol}_${stockInfo.mic_code}`}>
-                  <td>{stockInfo.symbol}</td>
+                  <td>
+                    <Link
+                      component={RouterLink}
+                      to={`details/${stockInfo.symbol}`}
+                    >
+                      {stockInfo.symbol}
+                    </Link>
+                  </td>
                   <td>{stockInfo.name}</td>
                   <td>{stockInfo.currency}</td>
                   <td>{stockInfo.type}</td>
@@ -78,18 +100,24 @@ const StockTable: React.FC<{}> = () => {
               ))}
             </tbody>
           </Suspense>
+          <tfoot>
+            <tr>
+              <td colSpan={4}>
+                <TablePaginator
+                  maxPages={maxPages}
+                  page={page}
+                  rowsPerPage={rowsPerPage}
+                  range={range}
+                  onChangePage={setPage}
+                  onChangeRowsPerPage={handleChangeRowsPerPage}
+                  totalRows={filteredData!.length}
+                />
+              </td>
+            </tr>
+          </tfoot>
         </Table>
-        <TablePaginator
-          maxPages={maxPages}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          range={range}
-          onChangePage={setPage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-          totalRows={filteredData!.length}
-        />
       </Sheet>
-    </>
+    </Box>
   );
 };
 

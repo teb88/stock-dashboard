@@ -119,6 +119,12 @@ export const hook = {
     const start_date = range?.[0];
     const end_date = range?.[1];
 
+    const intervalMap = {
+      [TimeInterval.interval1min]: 1 * 60 * 1000,
+      [TimeInterval.interval5min]: 5 * 60 * 1000,
+      [TimeInterval.interval15min]: 15 * 60 * 1000,
+    };
+
     return useQuery({
       queryKey: ['time_series', symbol, interval, start_date, end_date],
       queryFn: async () => {
@@ -139,6 +145,7 @@ export const hook = {
 
         return data;
       },
+      refetchInterval: start_date ? false : intervalMap[interval],
     });
   },
 };

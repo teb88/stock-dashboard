@@ -1,5 +1,5 @@
 import {Box} from '@mui/joy';
-import {createChart,TimeChartOptions} from 'lightweight-charts';
+import {createChart, TimeChartOptions} from 'lightweight-charts';
 import React, {useEffect, useRef} from 'react';
 
 import {TimeSeriesItem} from '../../../models/responses';
@@ -38,8 +38,15 @@ const ChartView: React.FC<ChartViewProps> = ({data}) => {
       wickDownColor: '#ef5350',
     });
 
-    candlestickSeries.setData(sort(data.map(TimeSeries), 'time', 'asc'));
+    const sortedData = sort(data.map(TimeSeries), 'time', 'asc');
+    candlestickSeries.setData(sortedData);
 
+    chart
+      .timeScale()
+      .setVisibleLogicalRange({
+        from: sortedData[0].time,
+        to: sortedData[sortedData.length - 1].time,
+      });
     chart.timeScale().fitContent();
 
     const handleResize = () => {

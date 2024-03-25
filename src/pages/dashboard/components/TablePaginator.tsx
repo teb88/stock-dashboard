@@ -33,7 +33,6 @@ const TablePaginator: React.FC<TablePaginatorProps> = ({
   return (
     <Box
       sx={{
-        p: '16px',
         gap: '16px',
         display: 'flex',
         alignItems: 'center',

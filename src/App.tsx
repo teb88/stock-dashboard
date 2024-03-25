@@ -1,4 +1,3 @@
-import '@fontsource/inter';
 import './App.css';
 
 import {Outlet} from 'react-router-dom';

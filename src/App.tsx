@@ -1,10 +1,10 @@
 import '@fontsource/inter';
 import './App.css';
 
-import Dashboard from './pages/dashboard/Dashboard';
+import {Outlet} from 'react-router-dom';
 
 function App() {
-  return <Dashboard />;
+  return <Outlet />;
 }
 
 export default App;

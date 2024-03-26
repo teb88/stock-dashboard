@@ -21,6 +21,11 @@ const StockTable: React.FC = () => {
   const [data, {setPage, maxPages, page, range, setRowsPerPage, rowsPerPage}] =
     usePaginate(filteredData);
 
+  const handleSetFilter = (filter: string) => {
+    setFilter(filter);
+    setPage(1);
+  };
+
   if (isLoading) {
     return 'Loading';
   }
@@ -52,7 +57,7 @@ const StockTable: React.FC = () => {
         <TableFilter
           placeholder="Buscar por..."
           textFilter={filter}
-          setTextFilter={setFilter}
+          setTextFilter={handleSetFilter}
           onChangeFilterOption={(val) =>
             setSearchProperty(val as 'name' | 'symbol')
           }

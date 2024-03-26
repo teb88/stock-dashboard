@@ -7,6 +7,7 @@ import {
   TimeSeriesResponse,
 } from '../models/responses';
 import {composeUrl} from './utils';
+import {dateParser} from '../utils/time';
 
 const API_BASE = 'https://api.twelvedata.com/';
 
@@ -116,7 +117,8 @@ export const hook = {
     interval: TimeInterval,
     range?: [string, string]
   ) => {
-    const start_date = range?.[0];
+    const start_date =
+      range?.[0] || dateParser.MM_DD_YYYY(new Date().toString());
     const end_date = range?.[1];
 
     const intervalMap = {
@@ -132,7 +134,11 @@ export const hook = {
           return;
         }
 
-        const queryParams: Record<string, string> = {symbol, interval};
+        const queryParams: Record<string, string> = {
+          symbol,
+          interval,
+          outputsize: '30',
+        };
 
         if (start_date) {
           queryParams.start_date = start_date;
@@ -145,7 +151,7 @@ export const hook = {
 
         return data;
       },
-      refetchInterval: start_date ? false : intervalMap[interval],
+      refetchInterval: end_date ? false : intervalMap[interval],
     });
   },
 };

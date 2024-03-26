@@ -1,4 +1,4 @@
-import {Box, Button,Sheet, ToggleButtonGroup} from '@mui/joy';
+import {Box, Button, Sheet, ToggleButtonGroup} from '@mui/joy';
 import React from 'react';
 
 import {TimeInterval} from '../../../models/generic';
@@ -17,11 +17,17 @@ const ChartFilters: React.FC<ChartFiltersProps> = ({
       onChangeInterval(interval);
     }
   };
+
+  const handleChangehistoryTimeFrame = () => {
+    // TODO
+  };
+
   return (
     <Sheet
       variant="outlined"
       sx={{p: 1, mb: 2, boxShadow: 'sm', borderRadius: 'md'}}
     >
+      {/* Interval filter */}
       <Box>
         <ToggleButtonGroup value={interval} onChange={handleChangeInterval}>
           <Button size="sm" value={TimeInterval.interval1min}>
@@ -34,6 +40,12 @@ const ChartFilters: React.FC<ChartFiltersProps> = ({
             15m
           </Button>
         </ToggleButtonGroup>
+      </Box>
+
+      {/* history time frame  */}
+      <Box>
+        <input type="date" name="from" />
+        <input type="date" name="to" />
       </Box>
     </Sheet>
   );

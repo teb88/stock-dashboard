@@ -1,5 +1,5 @@
 import {Box} from '@mui/joy';
-import {createChart, TimeChartOptions} from 'lightweight-charts';
+import {ColorType, createChart, TimeChartOptions} from 'lightweight-charts';
 import React, {useEffect, useRef} from 'react';
 
 import {TimeSeriesItem} from '../../../models/responses';
@@ -21,15 +21,17 @@ const ChartView: React.FC<ChartViewProps> = ({data}) => {
     const chartOptions = {
       layout: {
         textColor: 'black',
-        background: {type: 'solid', color: 'transparent'},
+        background: {type: ColorType.Solid, color: 'transparent'},
       },
     };
 
-    const chart = createChart(
-      containerRef.current,
-      chartOptions as TimeChartOptions
-    );
+    const chart = createChart(containerRef.current, chartOptions);
 
+    chart.applyOptions({
+      timeScale: {
+        timeVisible: true,
+      },
+    });
     const candlestickSeries = chart.addCandlestickSeries({
       upColor: '#26a69a',
       downColor: '#ef5350',
@@ -41,12 +43,6 @@ const ChartView: React.FC<ChartViewProps> = ({data}) => {
     const sortedData = sort(data.map(TimeSeries), 'time', 'asc');
     candlestickSeries.setData(sortedData);
 
-    chart
-      .timeScale()
-      .setVisibleLogicalRange({
-        from: sortedData[0].time,
-        to: sortedData[sortedData.length - 1].time,
-      });
     chart.timeScale().fitContent();
 
     const handleResize = () => {

@@ -18,9 +18,9 @@ const ChartFilters: React.FC<ChartFiltersProps> = ({
     }
   };
 
-  const handleChangehistoryTimeFrame = () => {
-    // TODO
-  };
+  // const handleChangehistoryTimeFrame = () => {
+  //   // TODO
+  // };
 
   return (
     <Sheet

@@ -1,5 +1,5 @@
 import {Box} from '@mui/joy';
-import {ColorType, createChart, TimeChartOptions} from 'lightweight-charts';
+import {ColorType, createChart} from 'lightweight-charts';
 import React, {useEffect, useRef} from 'react';
 
 import {TimeSeriesItem} from '../../../models/responses';

@@ -4,7 +4,7 @@ import './index.css';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom/client';
-import {createHashRouter,RouterProvider} from 'react-router-dom';
+import {createHashRouter, Navigate, RouterProvider} from 'react-router-dom';
 
 import {DEPLOYMENT_PATH} from './app.config.ts';
 import App from './App.tsx';
@@ -21,6 +21,10 @@ const router = createHashRouter(
       children: [
         {path: '/', element: <Dashboard />},
         {path: 'details/:symbol', element: <Details />},
+        {
+          path: '*',
+          element: <Navigate to={'/'} replace />,
+        },
       ],
     },
   ],

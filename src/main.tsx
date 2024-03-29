@@ -4,7 +4,7 @@ import './index.css';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom/client';
-import {RouterProvider, createHashRouter} from 'react-router-dom';
+import {createHashRouter,RouterProvider} from 'react-router-dom';
 
 import {DEPLOYMENT_PATH} from './app.config.ts';
 import App from './App.tsx';

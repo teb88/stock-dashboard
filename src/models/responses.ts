@@ -23,6 +23,7 @@ export interface TimeSeriesItem {
 }
 
 export interface TimeSeriesResponse {
+  message?: string;
   metadata: Record<string, string>;
   values: TimeSeriesItem[];
   status: string;

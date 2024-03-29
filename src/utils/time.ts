@@ -1,5 +1,5 @@
 export const dateParser = {
-  MM_DD_YYYY: (dateString: string) => {
+  toMMDDYYY: (dateString: string) => {
     try {
       const date = new Date(dateString);
       return Intl.DateTimeFormat('fr-CA', {

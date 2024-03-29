@@ -1,16 +1,30 @@
-import {Box, Button, Sheet, ToggleButtonGroup} from '@mui/joy';
+import {Cancel} from '@mui/icons-material';
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Sheet,
+  ToggleButtonGroup,
+  Typography,
+} from '@mui/joy';
 import React from 'react';
 
-import {TimeInterval} from '../../../models/generic';
+import {DateRange, TimeInterval} from '../../../models/generic';
+import DateRangeFilter from './DateRangeFilter';
 
 interface ChartFiltersProps {
   onChangeInterval: (newInterval: TimeInterval) => void;
+  onChangeDateRange: (dateRange?: DateRange) => void;
   interval: TimeInterval;
+  dateRange?: DateRange;
 }
 
 const ChartFilters: React.FC<ChartFiltersProps> = ({
   onChangeInterval,
   interval,
+  onChangeDateRange,
+  dateRange,
 }) => {
   const handleChangeInterval = (_: unknown, interval: TimeInterval | null) => {
     if (interval) {
@@ -18,17 +32,21 @@ const ChartFilters: React.FC<ChartFiltersProps> = ({
     }
   };
 
-  // const handleChangehistoryTimeFrame = () => {
-  //   // TODO
-  // };
-
   return (
     <Sheet
       variant="outlined"
-      sx={{p: 1, mb: 2, boxShadow: 'sm', borderRadius: 'md'}}
+      sx={{
+        p: 1,
+        mb: 2,
+        display: 'flex',
+        justifyContent: 'space-between',
+        boxShadow: 'sm',
+        borderRadius: 'md',
+      }}
     >
       {/* Interval filter */}
-      <Box>
+      <FormControl orientation="horizontal" size="sm">
+        <FormLabel>Interval:</FormLabel>
         <ToggleButtonGroup value={interval} onChange={handleChangeInterval}>
           <Button size="sm" value={TimeInterval.interval1min}>
             1m
@@ -40,12 +58,42 @@ const ChartFilters: React.FC<ChartFiltersProps> = ({
             15m
           </Button>
         </ToggleButtonGroup>
+      </FormControl>
+
+      <Box sx={{textAlign: 'center'}}>
+        {dateRange ? (
+          <>
+            <Typography fontWeight="bold" level="title-sm">
+              Modo Histórico
+            </Typography>
+            <Typography level="body-sm">
+              {dateRange.from} - {dateRange.to}
+            </Typography>
+          </>
+        ) : (
+          <>
+            <Typography fontWeight="bold" level="title-sm">
+              Modo Tiempo Real
+            </Typography>
+            <Typography level="body-sm">Hoy</Typography>
+          </>
+        )}
       </Box>
 
       {/* history time frame  */}
       <Box>
-        <input type="date" name="from" />
-        <input type="date" name="to" />
+        {dateRange ? (
+          <Button
+            size="sm"
+            onClick={() => onChangeDateRange()}
+            variant="outlined"
+          >
+            <Cancel sx={{mr: 1, fontSize: 16}} />
+            Clear Date Range
+          </Button>
+        ) : (
+          <DateRangeFilter onChange={onChangeDateRange} />
+        )}
       </Box>
     </Sheet>
   );

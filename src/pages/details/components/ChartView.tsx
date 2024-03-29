@@ -1,10 +1,8 @@
 import {Box} from '@mui/joy';
-import {ColorType, createChart} from 'lightweight-charts';
 import React, {useEffect, useRef} from 'react';
 
 import {TimeSeriesItem} from '../../../models/responses';
-import {TimeSeries} from '../../../models/ViewModels/TimeSeries';
-import {sort} from '../../../utils/array';
+import {setupChart} from '../../../utils/chart';
 
 interface ChartViewProps {
   data?: TimeSeriesItem[];
@@ -18,32 +16,7 @@ const ChartView: React.FC<ChartViewProps> = ({data}) => {
       return;
     }
 
-    const chartOptions = {
-      layout: {
-        textColor: 'black',
-        background: {type: ColorType.Solid, color: 'transparent'},
-      },
-    };
-
-    const chart = createChart(containerRef.current, chartOptions);
-
-    chart.applyOptions({
-      timeScale: {
-        timeVisible: true,
-      },
-    });
-    const candlestickSeries = chart.addCandlestickSeries({
-      upColor: '#26a69a',
-      downColor: '#ef5350',
-      borderVisible: false,
-      wickUpColor: '#26a69a',
-      wickDownColor: '#ef5350',
-    });
-
-    const sortedData = sort(data.map(TimeSeries), 'time', 'asc');
-    candlestickSeries.setData(sortedData);
-
-    chart.timeScale().fitContent();
+    const chart = setupChart(data, containerRef.current);
 
     const handleResize = () => {
       if (containerRef.current) {
@@ -61,7 +34,9 @@ const ChartView: React.FC<ChartViewProps> = ({data}) => {
   }, [data]);
 
   return (
-    <Box component="section" ref={containerRef} sx={{height: '100%'}}></Box>
+    <Box component="section" ref={containerRef} sx={{height: '100%'}}>
+      {/** CHART CONTENT */}
+    </Box>
   );
 };
 

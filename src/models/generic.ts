@@ -4,11 +4,6 @@ export enum TimeInterval {
   interval15min = '15min',
 }
 
-export enum ChartDisplayMode {
-  RealTime,
-  DateRange,
-}
-
 export interface DateRange {
   from: string;
   to: string;

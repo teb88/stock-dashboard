@@ -3,6 +3,7 @@ import React, {Suspense, useState} from 'react';
 import {Link as RouterLink} from 'react-router-dom';
 
 import {hook} from '../../../api/client';
+import LoadingIndicator from '../../../components/LoadingIndicator';
 import usePaginate from '../../../hooks/usePaginate';
 import useSearch from '../../../hooks/useSearch';
 import TableFilter from './TableFilter';
@@ -27,7 +28,7 @@ const StockTable: React.FC = () => {
   };
 
   if (isLoading) {
-    return 'Loading';
+    return <LoadingIndicator />;
   }
 
   if (!data) {
@@ -39,6 +40,11 @@ const StockTable: React.FC = () => {
       setRowsPerPage(rowsPerPage);
       setPage(1);
     }
+  };
+
+  const handleChangeSearchProperty = (val: string) => {
+    setSearchProperty(val as typeof searchProperty);
+    setPage(1);
   };
 
   return (
@@ -58,9 +64,7 @@ const StockTable: React.FC = () => {
           placeholder="Buscar por..."
           textFilter={filter}
           setTextFilter={handleSetFilter}
-          onChangeFilterOption={(val) =>
-            setSearchProperty(val as 'name' | 'symbol')
-          }
+          onChangeFilterOption={handleChangeSearchProperty}
           selectedFilterOption={searchProperty}
           filterOptions={[
             {key: 'name', label: 'Nombre'},

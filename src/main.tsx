@@ -8,6 +8,7 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 
 import {DEPLOYMENT_PATH} from './app.config.ts';
 import App from './App.tsx';
+import LoadingIndicator from './components/LoadingIndicator.tsx';
 
 const Details = React.lazy(() => import('./pages/details/Details.tsx'));
 const Dashboard = React.lazy(() => import('./pages/dashboard/Dashboard.tsx'));
@@ -31,7 +32,7 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Suspense fallback={'loading'}>
+      <Suspense fallback={<LoadingIndicator />}>
         <RouterProvider router={router} />
       </Suspense>
     </QueryClientProvider>

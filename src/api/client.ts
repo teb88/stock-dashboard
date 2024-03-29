@@ -6,8 +6,8 @@ import {
   StockResponse,
   TimeSeriesResponse,
 } from '../models/responses';
-import {composeUrl} from './utils';
 import {dateParser} from '../utils/time';
+import {composeUrl} from './utils';
 
 const API_BASE = 'https://api.twelvedata.com/';
 
@@ -23,26 +23,21 @@ export async function doRequest<T>(config: {
   queryParams?: URLSearchParams;
   onError?: (err: Error) => void;
 }): Promise<T | undefined> {
-  try {
-    const apiKey = import.meta.env.VITE_TWELVE_API_KEY;
+  const apiKey = import.meta.env.VITE_TWELVE_API_KEY;
 
-    const url = composeUrl(API_BASE, config);
+  const url = composeUrl(API_BASE, config);
 
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `apikey ${apiKey}`,
-      },
-    });
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `apikey ${apiKey}`,
+    },
+  });
 
-    if (!response.ok) throw new Error('Request did not succeed');
+  if (!response.ok) throw new Error('Request did not succeed');
 
-    return await response.json();
-  } catch (error) {
-    config.onError?.(error as Error);
-    console.error(error);
-  }
+  return await response.json();
 }
 
 /**
@@ -147,9 +142,7 @@ export const hook = {
           queryParams.end_date = end_date;
         }
 
-        const data = await fetchTimeSeries(queryParams);
-
-        return data;
+        return fetchTimeSeries(queryParams);
       },
       refetchInterval: end_date ? false : intervalMap[interval],
     });

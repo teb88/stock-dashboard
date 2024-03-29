@@ -1,6 +1,6 @@
 import {useQuery} from '@tanstack/react-query';
 
-import {TimeInterval} from '../models/generic';
+import {DateRange, TimeInterval} from '../models/generic';
 import {
   StockInfo,
   StockResponse,
@@ -83,7 +83,11 @@ export async function fetchTimeSeries(queryParams: Record<string, string>) {
     queryParams: new URLSearchParams(queryParams),
   });
 
-  return response?.values;
+  if (!response?.values || response?.status === 'error') {
+    throw new Error(response?.message);
+  }
+
+  return response.values || [];
 }
 
 export const hook = {
@@ -110,11 +114,11 @@ export const hook = {
   useTimeSeries: (
     symbol: string | undefined,
     interval: TimeInterval,
-    range?: [string, string]
+    range?: DateRange
   ) => {
     const start_date =
-      range?.[0] || dateParser.MM_DD_YYYY(new Date().toString());
-    const end_date = range?.[1];
+      range?.from || dateParser.toMMDDYYY(new Date().toString());
+    const end_date = range?.to;
 
     const intervalMap = {
       [TimeInterval.interval1min]: 1 * 60 * 1000,
@@ -132,7 +136,6 @@ export const hook = {
         const queryParams: Record<string, string> = {
           symbol,
           interval,
-          outputsize: '30',
         };
 
         if (start_date) {
@@ -145,6 +148,8 @@ export const hook = {
         return fetchTimeSeries(queryParams);
       },
       refetchInterval: end_date ? false : intervalMap[interval],
+      staleTime: 30 * 60 * 1000, // 30 minutes
+      retry: false,
     });
   },
 };

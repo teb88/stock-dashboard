@@ -2,8 +2,9 @@ import {useQuery} from '@tanstack/react-query';
 
 import {DateRange, TimeInterval} from '../models/generic';
 import {
+  Exchange,
+  Response,
   StockInfo,
-  StockResponse,
   TimeSeriesResponse,
 } from '../models/responses';
 import {dateParser} from '../utils/time';
@@ -19,7 +20,7 @@ const tempCache = new Map();
  * (embrace YAGNI!)
  */
 export async function doRequest<T>(config: {
-  resource: 'stocks' | 'time_series';
+  resource: 'stocks' | 'time_series' | 'exchanges';
   queryParams?: URLSearchParams;
   onError?: (err: Error) => void;
 }): Promise<T | undefined> {
@@ -46,17 +47,23 @@ export async function doRequest<T>(config: {
  * caching response is suggested
  */
 export async function fetchMarketList(
-  market: string
+  market?: string | null
 ): Promise<StockInfo[] | undefined> {
-  const cacheKey = 'stocks';
+  const cacheKey = 'stocks__' + market;
   if (tempCache.has(cacheKey)) {
     console.log('using cache');
     return tempCache.get(cacheKey);
   }
 
-  const response = await doRequest<StockResponse>({
+  const queryParams: Record<string, string> = {};
+
+  if (market && market !== 'Todos') {
+    queryParams.exchange = market;
+  }
+
+  const response = await doRequest<Response<StockInfo>>({
     resource: 'stocks',
-    queryParams: new URLSearchParams({exchange: market}),
+    queryParams: new URLSearchParams(queryParams),
   });
 
   const data = response?.data;
@@ -69,7 +76,7 @@ export async function fetchMarketList(
 }
 
 export async function fetchStockDetails(symbol: string) {
-  const response = await doRequest<StockResponse>({
+  const response = await doRequest<Response<StockInfo>>({
     resource: 'stocks',
     queryParams: new URLSearchParams({symbol}),
   });
@@ -90,12 +97,23 @@ export async function fetchTimeSeries(queryParams: Record<string, string>) {
   return response.values || [];
 }
 
+export async function fetchExchangeList() {
+  const response = await doRequest<Response<Exchange>>({
+    resource: 'exchanges',
+  });
+
+  if (!response?.data) throw new Error();
+
+  return response.data;
+}
+
 export const hook = {
-  useMarketList: (market: string = 'NYSE') => {
+  useMarketList: (market: string | null) => {
     return useQuery({
       queryKey: ['stocks', market],
       queryFn: () => fetchMarketList(market),
       staleTime: 30 * 60 * 1000, // 30 minutes
+      enabled: !!market,
     });
   },
   useStockDetails: (symbol?: string) => {
@@ -150,6 +168,13 @@ export const hook = {
       refetchInterval: end_date ? false : intervalMap[interval],
       staleTime: 30 * 60 * 1000, // 30 minutes
       retry: false,
+    });
+  },
+  useExchanges: () => {
+    return useQuery({
+      queryKey: ['exchanges'],
+      queryFn: fetchExchangeList,
+      staleTime: 90 * 60 * 1000, // 90 minutes
     });
   },
 };

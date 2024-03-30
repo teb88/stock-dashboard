@@ -1,6 +1,6 @@
-import {Box} from '@mui/joy';
 import './App.css';
 
+import {Box} from '@mui/joy';
 import {Outlet} from 'react-router-dom';
 
 function App() {

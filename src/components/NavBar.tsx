@@ -13,7 +13,7 @@ const NavBar: React.FC<NavBarProps> = ({children, sx = {}}) => {
       component="nav"
       sx={{
         width: '100%',
-        height: '40px',
+        height: '50px',
         display: 'flex',
         alignItems: 'center',
         p: 1,

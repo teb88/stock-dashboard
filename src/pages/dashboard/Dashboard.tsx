@@ -1,15 +1,23 @@
 import {Box, Typography} from '@mui/joy';
 
-import StockTable from './components/StockTable';
 import PageLayout from '../../components/PageLayout';
+import ExchangesBar from './components/ExchangesBar';
+import StockTable from './components/StockTable';
 
 const Dashboard = () => {
   return (
     <PageLayout
       headerContent={
-        <Typography level="h1" fontSize={14} sx={{color: 'inherit'}}>
-          Listado de acciones
-        </Typography>
+        <>
+          <Typography
+            level="h1"
+            fontSize={14}
+            sx={{color: 'inherit', flexShrink: 0}}
+          >
+            Listado de acciones
+          </Typography>
+          <ExchangesBar defaultExchange="NYSE" />
+        </>
       }
     >
       <Box

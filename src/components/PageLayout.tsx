@@ -1,5 +1,6 @@
 import {Box} from '@mui/joy';
 import React from 'react';
+
 import NavBar from './NavBar';
 
 interface PageLayoutProps {

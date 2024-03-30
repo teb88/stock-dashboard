@@ -3,6 +3,7 @@ import {useState} from 'react';
 import {useParams} from 'react-router-dom';
 
 import {hook} from '../../api/client';
+import LoadingIndicator from '../../components/LoadingIndicator';
 import {DateRange, TimeInterval} from '../../models/generic';
 import Chart from './components/Chart';
 import ChartFilters from './components/ChartFilters';
@@ -18,7 +19,7 @@ const Details = () => {
   const {data, isLoading} = hook.useStockDetails(symbol);
 
   if (isLoading) {
-    return 'Loading details';
+    return <LoadingIndicator />;
   }
 
   if (!data || !symbol) {

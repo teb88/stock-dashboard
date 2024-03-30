@@ -1,6 +1,6 @@
 import {Box, Link, Sheet, Table} from '@mui/joy';
 import React, {Suspense, useState} from 'react';
-import {Link as RouterLink} from 'react-router-dom';
+import {Link as RouterLink, useSearchParams} from 'react-router-dom';
 
 import {hook} from '../../../api/client';
 import LoadingIndicator from '../../../components/LoadingIndicator';
@@ -10,7 +10,10 @@ import TableFilter from './TableFilter';
 import TablePaginator from './TablePaginator';
 
 const StockTable: React.FC = () => {
-  const {data: rawData, isLoading} = hook.useMarketList();
+  const [searchParams] = useSearchParams();
+  const {data: rawData, isLoading} = hook.useMarketList(
+    searchParams.get('exchange')
+  );
   const [searchProperty, setSearchProperty] = useState<'name' | 'symbol'>(
     'name'
   );

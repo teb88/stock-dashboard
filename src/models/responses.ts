@@ -8,8 +8,8 @@ export interface StockInfo {
   type: string;
 }
 
-export interface StockResponse {
-  data: StockInfo[];
+export interface Response<T> {
+  data: T[];
   status: string;
 }
 
@@ -25,6 +25,13 @@ export interface TimeSeriesItem {
 export interface TimeSeriesResponse {
   message?: string;
   metadata: Record<string, string>;
-  values: TimeSeriesItem[];
+  values?: TimeSeriesItem[];
   status: string;
+}
+
+export interface Exchange {
+  name: string;
+  code: string;
+  country: string;
+  timezone: string;
 }

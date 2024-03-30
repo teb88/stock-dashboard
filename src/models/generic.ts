@@ -8,3 +8,10 @@ export interface DateRange {
   from: string;
   to: string;
 }
+
+export interface HeaderDetails {
+  currencies: string[];
+  countries: string[];
+  names: string[];
+  types: string[];
+}

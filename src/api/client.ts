@@ -122,8 +122,44 @@ export const hook = {
       queryFn: async () => {
         if (symbol) {
           const data = await fetchStockDetails(symbol);
-          return data?.[0];
+          return data;
         }
+      },
+      select: (data) => {
+        type DataGroup = {
+          currencies: Set<string>;
+          countries: Set<string>;
+          names: Set<string>;
+          types: Set<string>;
+        };
+
+        if (!data) {
+          throw new Error();
+        }
+
+        const dataGroup: DataGroup = data.reduce<DataGroup>(
+          (acc, val) => {
+            acc.countries.add(val.country);
+            acc.currencies.add(val.currency);
+            acc.names.add(val.name);
+            acc.types.add(val.type);
+            return acc;
+          },
+          /** Sets perform automatic deduplication */
+          {
+            currencies: new Set(),
+            countries: new Set(),
+            names: new Set(),
+            types: new Set(),
+          }
+        );
+
+        return {
+          currencies: Array.from(dataGroup.currencies),
+          countries: Array.from(dataGroup.countries),
+          names: Array.from(dataGroup.names),
+          types: Array.from(dataGroup.types),
+        };
       },
       staleTime: 30 * 60 * 1000, // 30 minutes
       enabled: !!symbol,

@@ -1,16 +1,15 @@
 import {Box, Sheet, Typography} from '@mui/joy';
 import React from 'react';
 
-import {StockInfo} from '../../../models/responses';
+import {HeaderDetails} from '../../../models/generic';
 
-// type DetailsHeaderProps = Pick<StockInfo, ''>
+interface DetailsHeaderProps extends HeaderDetails {}
 
-const DetailsHeader: React.FC<StockInfo> = ({
-  symbol,
-  currency,
-  country,
-  name,
-  type,
+const DetailsHeader: React.FC<DetailsHeaderProps> = ({
+  currencies,
+  countries,
+  names,
+  types,
 }) => {
   return (
     <Sheet
@@ -18,34 +17,50 @@ const DetailsHeader: React.FC<StockInfo> = ({
       variant="outlined"
       sx={{display: 'flex', boxShadow: 'sm', borderRadius: 'md', p: 1, mb: 2}}
     >
-      <Typography level="h1" fontSize={50} sx={{mr: 1, alignSelf: 'end'}}>
-        {symbol}
-      </Typography>
-      <Box sx={{display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 2}}>
-        <div>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr 1fr',
+          columnGap: 2,
+          width: '100%',
+        }}
+      >
+        <Box sx={{gridColumn: '1 / 4'}}>
           <Typography fontWeight="bold" level="body-xs">
-            Nombre:
+            Nombre/s:
           </Typography>
-          <Typography level="body-sm">{name}</Typography>
-        </div>
-        <div>
+          <Typography level="body-sm" sx={{fontSize: 12}}>
+            {names.join(' •	 ')}
+          </Typography>
+        </Box>
+        <Box>
           <Typography fontWeight="bold" level="body-xs">
             Pais:
           </Typography>
-          <Typography level="body-sm">{country}</Typography>
-        </div>
-        <div>
+          {countries.map((country) => (
+            <Typography key={country} level="body-sm" sx={{fontSize: 12}}>
+              {country}
+            </Typography>
+          ))}
+        </Box>
+        <Box>
           <Typography fontWeight="bold" level="body-xs">
             Moneda:
           </Typography>
-          <Typography level="body-sm">{currency}</Typography>
-        </div>
-        <div>
+          <Typography level="body-sm" sx={{fontSize: 12}}>
+            {currencies.join(', ')}
+          </Typography>
+        </Box>
+        <Box>
           <Typography fontWeight="bold" level="body-xs">
             Tipo:
           </Typography>
-          <Typography level="body-sm">{type}</Typography>
-        </div>
+          {types.map((type) => (
+            <Typography key={type} level="body-sm" sx={{fontSize: 12}}>
+              {type}
+            </Typography>
+          ))}
+        </Box>
       </Box>
     </Sheet>
   );

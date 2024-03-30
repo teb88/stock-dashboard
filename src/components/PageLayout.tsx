@@ -2,6 +2,7 @@ import {Box} from '@mui/joy';
 import React from 'react';
 
 import NavBar from './NavBar';
+// import ThemeToggle from './ThemeToggle';
 
 interface PageLayoutProps {
   headerContent: string | React.ReactElement;
@@ -20,7 +21,10 @@ const PageLayout: React.FC<PageLayoutProps> = ({headerContent, children}) => {
         overflow: 'hidden',
       }}
     >
-      <NavBar sx={{mb: 2}}>{headerContent}</NavBar>
+      <NavBar sx={{mb: 2}}>
+        {headerContent}
+        {/* <ThemeToggle /> TODO: enable dark/light mode toggle */}
+      </NavBar>
       <Box sx={{flexGrow: 1, overflow: 'hidden'}}>{children}</Box>
     </Box>
   );

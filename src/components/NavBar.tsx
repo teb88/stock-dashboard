@@ -3,7 +3,7 @@ import {SxProps} from '@mui/joy/styles/types';
 import React from 'react';
 
 interface NavBarProps {
-  children: string | React.ReactElement | React.ReactElement[];
+  children: string | React.ReactNode | React.ReactNode[];
   sx?: SxProps;
 }
 

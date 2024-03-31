@@ -3,6 +3,7 @@ import {Box, Typography} from '@mui/joy';
 import PageLayout from '../../components/PageLayout';
 import ExchangePicker from './components/ExchangePicker';
 import StockTable from './components/StockTable';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 
 const Dashboard = () => {
   return (
@@ -14,6 +15,7 @@ const Dashboard = () => {
             fontSize={14}
             sx={{color: 'inherit', flexShrink: 0}}
           >
+            <CurrencyExchangeIcon sx={{verticalAlign: 'sub', mx: 1}} />
             Listado de acciones
           </Typography>
           <ExchangePicker defaultExchange="NYSE" />

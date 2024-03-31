@@ -37,14 +37,14 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Suspense fallback={<LoadingIndicator />}>
-        <CssVarsProvider
-          defaultMode="system"
-          modeStorageKey="joy-mode-scheme-dark"
-        >
+      <CssVarsProvider
+        defaultMode="system"
+        modeStorageKey="joy-mode-scheme-dark"
+      >
+        <Suspense fallback={<LoadingIndicator />}>
           <RouterProvider router={router} />
-        </CssVarsProvider>
-      </Suspense>
+        </Suspense>
+      </CssVarsProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );

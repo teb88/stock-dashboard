@@ -9,6 +9,7 @@ const LoadingIndicator = () => {
         justifyContent: 'center',
         height: '100%',
         width: '100%',
+        backgroundColor: 'background.level1',
       }}
     >
       <Box sx={{width: '200px', height: '20px'}}>

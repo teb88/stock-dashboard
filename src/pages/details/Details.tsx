@@ -1,5 +1,4 @@
-import {ChevronLeft} from '@mui/icons-material';
-import {Box, IconButton, Typography} from '@mui/joy';
+import {Box} from '@mui/joy';
 import {useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 
@@ -10,6 +9,7 @@ import {DateRange, TimeInterval} from '../../models/generic';
 import Chart from './components/Chart';
 import ChartFilters from './components/ChartFilters';
 import DetailsHeader from './components/DetailsHeader';
+import HeaderContent from './components/HeaderContent';
 
 const Details = () => {
   const navigate = useNavigate();
@@ -32,12 +32,7 @@ const Details = () => {
   return (
     <PageLayout
       headerContent={
-        <>
-          <IconButton sx={{color: 'neutral.200'}} onClick={() => navigate(-1)}>
-            <ChevronLeft />
-          </IconButton>
-          <Typography sx={{color: 'inherit'}}>{symbol}</Typography>
-        </>
+        <HeaderContent symbol={symbol} onClickGoBack={() => navigate(-1)} />
       }
     >
       <Box

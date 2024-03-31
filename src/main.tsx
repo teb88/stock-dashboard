@@ -7,7 +7,6 @@ import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom/client';
 import {createBrowserRouter, Navigate, RouterProvider} from 'react-router-dom';
 
-import {DEPLOYMENT_PATH} from './app.config.ts';
 import App from './App.tsx';
 import LoadingIndicator from './components/LoadingIndicator.tsx';
 
@@ -29,7 +28,9 @@ const router = createBrowserRouter(
       ],
     },
   ],
-  {basename: import.meta.env.MODE === 'production' ? DEPLOYMENT_PATH : '/'}
+  {
+    basename: import.meta.env.VITE_BUILD_BASE || '/',
+  }
 );
 
 const queryClient = new QueryClient();

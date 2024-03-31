@@ -17,6 +17,7 @@ concurrency:
 
 env:
   VITE_TWELVE_API_KEY: ${{ secrets.VITE_TWELVE_API_KEY }}
+  VITE_BUILD_BASE: ${{ secrets.VITE_BUILD_BASE }}
 
 jobs:
   deploy:

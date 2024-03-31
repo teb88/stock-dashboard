@@ -5,7 +5,7 @@ import {Outlet} from 'react-router-dom';
 
 function App() {
   return (
-    <Box sx={{height: '100%'}}>
+    <Box sx={{height: '100%', backgroundColor: 'background.level1'}}>
       <Outlet />
     </Box>
   );

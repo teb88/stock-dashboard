@@ -36,6 +36,5 @@
     "eslint-plugin-simple-import-sort": "^12.0.0",
     "typescript": "^5.0.2",
     "vite": "^4.4.5"
-  },
-  "homepage": "https://teb88.github.io/stock-dashboard"
+  }
 }

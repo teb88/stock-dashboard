@@ -1,7 +1,7 @@
 import {Box, Typography} from '@mui/joy';
 
 import PageLayout from '../../components/PageLayout';
-import ExchangesBar from './components/ExchangesBar';
+import ExchangePicker from './components/ExchangePicker';
 import StockTable from './components/StockTable';
 
 const Dashboard = () => {
@@ -16,7 +16,7 @@ const Dashboard = () => {
           >
             Listado de acciones
           </Typography>
-          <ExchangesBar defaultExchange="NYSE" />
+          <ExchangePicker defaultExchange="NYSE" />
         </>
       }
     >

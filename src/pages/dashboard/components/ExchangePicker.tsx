@@ -1,21 +1,23 @@
-import {ExpandMore} from '@mui/icons-material';
+import {Cancel, ExpandMore} from '@mui/icons-material';
 import {
   Box,
   Button,
+  IconButton,
+  Input,
   Link,
   Modal,
   ModalClose,
   ModalDialog,
   Table,
-  Typography,
 } from '@mui/joy';
 import React, {useEffect, useState} from 'react';
 import {Link as ReactRouterLink, useSearchParams} from 'react-router-dom';
 
 import {hook} from '../../../api/client';
+import useSearch from '../../../hooks/useSearch';
 import {Exchange} from '../../../models/responses';
 
-interface ExchangesBarProps {
+interface ExchangePickerProps {
   defaultExchange: string;
 }
 
@@ -29,7 +31,7 @@ const DEFAULT_ITEMS: Array<Exchange & {noSearch?: boolean}> = [
   },
 ];
 
-const ExchangesBar: React.FC<ExchangesBarProps> = ({defaultExchange}) => {
+const ExchangePicker: React.FC<ExchangePickerProps> = ({defaultExchange}) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {data} = hook.useExchanges();
@@ -39,6 +41,11 @@ const ExchangesBar: React.FC<ExchangesBarProps> = ({defaultExchange}) => {
       setSearchParams({exchange: defaultExchange});
     }
   }, [searchParams, setSearchParams, defaultExchange]);
+
+  const [filteredData, {setFilter, filter: textFilter}] = useSearch(
+    data,
+    'name'
+  );
 
   return (
     <>
@@ -64,9 +71,20 @@ const ExchangesBar: React.FC<ExchangesBarProps> = ({defaultExchange}) => {
       <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <ModalDialog>
           <ModalClose />
-          <Typography level="title-sm" component="h1">
-            Mercados de Intercambio
-          </Typography>
+          <Input
+            sx={{mt: 3}}
+            placeholder="buscar por nombre"
+            onChange={(ev) => setFilter(ev.target.value)}
+            value={textFilter}
+            endDecorator={
+              <IconButton
+                onClick={() => setFilter('')}
+                sx={{visibility: textFilter ? 'visible' : 'hidden'}}
+              >
+                <Cancel />
+              </IconButton>
+            }
+          />
           <Box sx={{height: '100%', overflowY: 'auto'}}>
             <Table stickyHeader>
               <thead>
@@ -77,7 +95,7 @@ const ExchangesBar: React.FC<ExchangesBarProps> = ({defaultExchange}) => {
                 </tr>
               </thead>
               <tbody>
-                {DEFAULT_ITEMS.concat(data || []).map((exchange) => (
+                {DEFAULT_ITEMS.concat(filteredData || []).map((exchange) => (
                   <tr key={exchange.code}>
                     <td>
                       <Link
@@ -104,4 +122,4 @@ const ExchangesBar: React.FC<ExchangesBarProps> = ({defaultExchange}) => {
   );
 };
 
-export default ExchangesBar;
+export default ExchangePicker;
